@@ -8,9 +8,11 @@ class Jugador {
         this.id = ++Jugador.id
     }
     agregarEstadistica(mensaje, partido){
+        const inputDiv = document.createElement('div')
+        inputDiv.setAttribute('class', 'input-group flex-nowrap')
         const inputValor = document.createElement('input')  
         inputValor.setAttribute('type','number')
-        inputValor.setAttribute('class','number')
+        inputValor.setAttribute('class','form-control')
         inputValor.setAttribute('placeholder', 'Ingrese estadística')
         inputValor.setAttribute('id',`estadisticasJugador${this.id}, partido ${partido + 1}`)
         inputValor.setAttribute('required', 'true')
@@ -51,11 +53,12 @@ function playerConfig (){
     if (cantidadJugadores > 0){
         const nombreContainer = document.getElementById('nombreContainer')
         nombreContainer.innerHTML = ''
+        const formContainer = document .createElement('div')
         
         for (let i = 0; i < cantidadJugadores; i++){
             const preguntarNombre = document.createElement('input')
             preguntarNombre.setAttribute('type', 'text')
-            preguntarNombre.setAttribute('class', 'text')
+            preguntarNombre.setAttribute('class', 'form-control')
             preguntarNombre.setAttribute('placeholder', `Ingresa el nombre del jugador ${i+1}`)
             preguntarNombre.setAttribute('id', `nombreJugador ${i+1}`)
             preguntarNombre.setAttribute('required', 'true')
@@ -64,17 +67,22 @@ function playerConfig (){
             labelJugador.textContent = `Ingresa el nombre del jugador ${i+1}`
             labelJugador.setAttribute('class', 'labelJugador')
             
-            nombreContainer.appendChild(labelJugador)
-            nombreContainer.appendChild(preguntarNombre)
+            formContainer.appendChild(labelJugador)
+            formContainer.appendChild(preguntarNombre)
+            nombreContainer.appendChild(formContainer)
         }
+        const btnContainer = document.getElementById('btnContainer')
         const nombreBtn = document.createElement('button')
         nombreBtn.textContent = 'Continuar'
+        nombreBtn.setAttribute('type', 'button')
+        nombreBtn.setAttribute('class', 'btn btn-primary')
         nombreBtn.addEventListener('click', function(){
             event.preventDefault()
             crearJugadores()
             ingresarPartidos()
         })
-        nombreContainer.appendChild(nombreBtn)
+        btnContainer.appendChild(nombreBtn)
+        nombreContainer.appendChild(btnContainer)
     }
 }
 
@@ -93,11 +101,12 @@ let preguntaPartidos
 function ingresarPartidos(){
     
     let partidosContainer = document.getElementById('cantidadPartidos')
+    const questionContainer = document.getElementById('questionContainer')
     const preguntaPartidos = document.createElement('input')
-    
+    const btnContainer = document.getElementById('btnContainer2')
 
     preguntaPartidos.setAttribute('type', 'text')
-    preguntaPartidos.setAttribute('class', 'text')
+    preguntaPartidos.setAttribute('class', 'form-control')
     preguntaPartidos.setAttribute('min', '1')
     preguntaPartidos.setAttribute('placeholder', 'Ingrese cantidad de partidos')
     preguntaPartidos.setAttribute('id', 'partidosTotales')
@@ -107,22 +116,27 @@ function ingresarPartidos(){
     labelPartidos.textContent = 'Ingresa la cantidad de partidos a analizar'
     labelPartidos.setAttribute('class', 'labelPartidos')
 
-    partidosContainer.appendChild(labelPartidos)
-    partidosContainer.appendChild(preguntaPartidos)
+    questionContainer.appendChild(labelPartidos)
+    questionContainer.appendChild(preguntaPartidos)
+    partidosContainer.appendChild(questionContainer)
 
     const partidosBtn = document.createElement('button')
+    partidosBtn.setAttribute('type', 'button')
+    partidosBtn.setAttribute('class', 'btn btn-primary')
     partidosBtn.textContent = 'Continuar'
     partidosBtn.addEventListener('click', function(){
         partidosTotales = parseInt(preguntaPartidos.value)
         event.preventDefault()
         seleccionarEstadisticas()
     })
-    partidosContainer.appendChild(partidosBtn)
+    btnContainer.appendChild(partidosBtn)
+    partidosContainer.appendChild(btnContainer)
 }
 
 function seleccionarEstadisticas(){
     const opcionesContainer = document.getElementById('opcionesContainer')
-    opcionesContainer.innerHTML = `<option value="">Selecciona una estadística</option>
+    opcionesContainer.setAttribute('class', 'form-select form-select-sm')
+    opcionesContainer.innerHTML = `<option selected>Selecciona una estadística</option>
                                     <option value="puntos">Puntos</option>
                                     <option value="rebotes">Rebotes</option>
                                     <option value="asistencias">Asistencias</option>`
@@ -142,6 +156,8 @@ function preguntarEstadisticas(mensaje) {
         }
     }
     const continuarBtn = document.createElement('button')
+        continuarBtn.setAttribute('type', 'button')
+        continuarBtn.setAttribute('class', 'btn btn-primary')
         continuarBtn.textContent = 'Continuar'
         continuarBtn.addEventListener('click', function() {
             let todosLosCamposTienenValor = inputs.every(input => input.value);
@@ -168,15 +184,19 @@ function mostrarResultados(mensaje){
         finalContainer.appendChild(outputResultado)
     }
 
-    const btnContainer = document.getElementById('btnContainer')
+    const btnContainer = document.getElementById('btnContainer3')
 
     const resetBtn = document.createElement('button')
+    resetBtn.setAttribute('type', 'button')
+    resetBtn.setAttribute('class', 'btn btn-success')
     resetBtn.textContent = 'Reiniciar Simulador'
     resetBtn.addEventListener('click', function() {
         reiniciarSimulador()
     })
 
     const endBtn = document.createElement('button')
+    endBtn.setAttribute('type', 'button')
+    endBtn.setAttribute('class', 'btn btn-danger')
     endBtn.textContent = 'Finalizar Simulador'
     endBtn.addEventListener('click', function() {
         finalizarSimulador()
@@ -184,6 +204,7 @@ function mostrarResultados(mensaje){
 
     btnContainer.appendChild(resetBtn)
     btnContainer.appendChild(endBtn)
+    finalContainer.appendChild(btnContainer)
 }
 
 function finalizarSimulador() {
