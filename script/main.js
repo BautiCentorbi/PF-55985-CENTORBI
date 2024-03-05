@@ -26,8 +26,6 @@ class Jugador {
         return inputValor
     }
 
-    // Función de orden superior aplicada en array de objetos (reduce).
-    
     calcularPromedioEstadistica(){
         const totalEstadistica = this.estadisticas.reduce((acc, el) => acc + el, 0)
         return totalEstadistica / this.estadisticas.length || 0
@@ -39,7 +37,7 @@ const main = document.getElementById('statsWeb')
 const jugadoresTotales = []
 
 const startButton = document.getElementById('playerConfig')
-startButton.addEventListener('click', function(){
+startButton.addEventListener('click', function(event){
     event.preventDefault()
     playerConfig()
 })
@@ -76,7 +74,7 @@ function playerConfig (){
         nombreBtn.textContent = 'Continuar'
         nombreBtn.setAttribute('type', 'button')
         nombreBtn.setAttribute('class', 'btn btn-primary')
-        nombreBtn.addEventListener('click', function(){
+        nombreBtn.addEventListener('click', function(event){
             event.preventDefault()
             crearJugadores()
             ingresarPartidos()
@@ -124,7 +122,7 @@ function ingresarPartidos(){
     partidosBtn.setAttribute('type', 'button')
     partidosBtn.setAttribute('class', 'btn btn-primary')
     partidosBtn.textContent = 'Continuar'
-    partidosBtn.addEventListener('click', function(){
+    partidosBtn.addEventListener('click', function(event){
         partidosTotales = parseInt(preguntaPartidos.value)
         event.preventDefault()
         seleccionarEstadisticas()
@@ -163,22 +161,24 @@ function preguntarEstadisticas(mensaje) {
             let todosLosCamposTienenValor = inputs.every(input => input.value);
             if (todosLosCamposTienenValor) {
                 for (let i = 0; i < inputs.length; i++) {
-                    let idPartido = i % partidosTotales;
-                    let idJugador = Math.floor(i / partidosTotales);
-                    jugadoresTotales[idJugador].estadisticas[idPartido] = parseInt(inputs[i].value);
+                    let idPartido = i % partidosTotales
+                    let idJugador = Math.floor(i / partidosTotales)
+                    jugadoresTotales[idJugador].estadisticas[idPartido] = parseInt(inputs[i].value)
                 }
-                mostrarResultados(mensaje);
+                mostrarResultados(mensaje)
             } else {
-                alert('Por favor, completa todos los campos antes de continuar.');
+                alert('Por favor, completa todos los campos antes de continuar.')
             }
         })
     resultadosContainer.appendChild(continuarBtn)
 }
 
+const finalContainer = document.getElementById('resultado')
+let promedioEstadistica
+
 function mostrarResultados(mensaje){
     for (let i = 0; i < jugadoresTotales.length; i++){
-        const promedioEstadistica = jugadoresTotales[i].calcularPromedioEstadistica()
-        const finalContainer = document.getElementById('resultado')
+        promedioEstadistica = jugadoresTotales[i].calcularPromedioEstadistica()
         const outputResultado = document.createElement('p')
         outputResultado.textContent = `El jugador ${jugadoresTotales[i].nombre} hizo un promedio de ${promedioEstadistica} ${mensaje} por partido`
         finalContainer.appendChild(outputResultado)
@@ -212,10 +212,15 @@ function finalizarSimulador() {
     let finalizar = document.createElement('b')
     finalizar.textContent = '¡Gracias por usar este simulador!'
     resultadosContainer.appendChild(finalizar)
+    guardarLocalStorage()
 }
 
 function reiniciarSimulador() {
-    jugadoresTotales.length = 0;
-    resultadosContainer.innerHTML = ''
-    playerConfig();
+    guardarLocalStorage()
+    location.reload()
+}
+
+function guardarLocalStorage(){
+    localStorage.setItem('jugadores', JSON.stringify(jugadoresTotales))
+    localStorage.setItem('partidos', partidosTotales)
 }

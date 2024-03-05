@@ -24,6 +24,7 @@ header h2{
     width: 100%;
     text-align: center;
     font-size: 28px;
+    padding-bottom: 20px;
 }
 
 .left-side {
@@ -53,6 +54,23 @@ header h2{
 
 .container-fluid {
     display: grid;
+}
+nav{
+    background-color: #023a8d;
+}
+
+nav .container-fluid {
+    padding: 16px 100px;
+}
+.navbar-brand {
+    padding: 0 40px;
+    color: #FFFFFF;
+    font-weight: 600;
+    font-size: 30px;
+}
+.nav-item a{
+    color: #FFFFFF;
+    font-size: 18px;
 }
 
 label {
@@ -87,4 +105,27 @@ form {
 div p {
     font-size: larger;
     font-weight: 600;
+}
+
+.mainStorage {
+    padding: 40px;
+    margin: 0 300px;
+    width: auto;
+}
+
+.storageContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.storageDiv{
+    background-color: #f6f6f6;
+    border: solid 2px;
+    border-radius: 16px;
+    border-color: #e3e3e3;
+    width: 550px;
+    padding: 40px;
+    margin: 20px;
 }
