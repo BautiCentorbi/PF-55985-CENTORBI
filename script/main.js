@@ -202,6 +202,15 @@ function mostrarResultados(mensaje){
         finalizarSimulador()
     })
 
+    const historialBtn = document.createElement('button')
+    historialBtn.setAttribute('type', 'button')
+    historialBtn.setAttribute('class', 'btn btn-light')
+    historialBtn.textContent = 'Visitar Historial'
+    historialBtn.addEventListener('click', function() {
+        window.location = 'storage.html'
+    })
+
+    btnContainer.appendChild(historialBtn)
     btnContainer.appendChild(resetBtn)
     btnContainer.appendChild(endBtn)
     finalContainer.appendChild(btnContainer)
