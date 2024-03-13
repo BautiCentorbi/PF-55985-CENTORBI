@@ -74,6 +74,7 @@ function playerConfig (){
         nombreBtn.textContent = 'Continuar'
         nombreBtn.setAttribute('type', 'button')
         nombreBtn.setAttribute('class', 'btn btn-primary')
+        nombreBtn.setAttribute('for', 'nombreContainer')
         nombreBtn.addEventListener('click', function(event){
             event.preventDefault()
             crearJugadores()
@@ -81,6 +82,11 @@ function playerConfig (){
         })
         btnContainer.appendChild(nombreBtn)
         nombreContainer.appendChild(btnContainer)
+    } else {
+        const error1 = document.createElement('p')
+        error1.textContent = 'Has ingresado un valor no válido, por favor, inténtalo de nuevo'
+        error1.setAttribute('class','errores')
+        nombreContainer.appendChild(error1)
     }
 }
 
@@ -97,7 +103,6 @@ let partidosTotales
 let preguntaPartidos
 
 function ingresarPartidos(){
-    
     let partidosContainer = document.getElementById('cantidadPartidos')
     const questionContainer = document.getElementById('questionContainer')
     const preguntaPartidos = document.createElement('input')
@@ -113,7 +118,7 @@ function ingresarPartidos(){
     const labelPartidos = document.createElement('label')
     labelPartidos.textContent = 'Ingresa la cantidad de partidos a analizar'
     labelPartidos.setAttribute('class', 'labelPartidos')
-
+        
     questionContainer.appendChild(labelPartidos)
     questionContainer.appendChild(preguntaPartidos)
     partidosContainer.appendChild(questionContainer)
@@ -122,13 +127,21 @@ function ingresarPartidos(){
     partidosBtn.setAttribute('type', 'button')
     partidosBtn.setAttribute('class', 'btn btn-primary')
     partidosBtn.textContent = 'Continuar'
-    partidosBtn.addEventListener('click', function(event){
-        partidosTotales = parseInt(preguntaPartidos.value)
-        event.preventDefault()
-        seleccionarEstadisticas()
-    })
     btnContainer.appendChild(partidosBtn)
     partidosContainer.appendChild(btnContainer)
+
+    partidosBtn.addEventListener('click', function(event){
+        if (!isNaN(preguntaPartidos.value)) {
+            partidosTotales = parseInt(preguntaPartidos.value)
+            event.preventDefault()
+            seleccionarEstadisticas()
+        } else {
+            const error1 = document.createElement('p')
+            error1.textContent = 'Has ingresado un valor no válido, por favor, inténtalo de nuevo'
+            error1.setAttribute('class','errores')
+            partidosContainer.appendChild(error1)
+        }
+    })
 }
 
 function seleccionarEstadisticas(){
@@ -158,8 +171,9 @@ function preguntarEstadisticas(mensaje) {
         continuarBtn.setAttribute('class', 'btn btn-primary')
         continuarBtn.textContent = 'Continuar'
         continuarBtn.addEventListener('click', function() {
-            let todosLosCamposTienenValor = inputs.every(input => input.value);
-            if (todosLosCamposTienenValor) {
+            let todosLosCamposTienenValor = inputs.every(input => input.value)
+            let todosLosCamposSonPositivos = inputs.every(input => Number(input.value) >= 0)
+            if (todosLosCamposTienenValor && todosLosCamposSonPositivos) {
                 for (let i = 0; i < inputs.length; i++) {
                     let idPartido = i % partidosTotales
                     let idJugador = Math.floor(i / partidosTotales)
@@ -167,7 +181,10 @@ function preguntarEstadisticas(mensaje) {
                 }
                 mostrarResultados(mensaje)
             } else {
-                alert('Por favor, completa todos los campos antes de continuar.')
+                const error2 = document.createElement('p')
+                error2.textContent = 'Por favor, verifica haber llenado todos los campos con valores positivos antes de continuar.'
+                error2.setAttribute('class','errores')
+                finalContainer.appendChild(error2)
             }
         })
     resultadosContainer.appendChild(continuarBtn)
