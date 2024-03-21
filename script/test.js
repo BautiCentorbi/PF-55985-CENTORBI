@@ -21,14 +21,16 @@ const mainContent = document.getElementById('mainContent')
 const promedioContainer = document.getElementById('promedioEquipo')
 
 const btnCalcular = document.getElementById('calcularPromedio')
-btnCalcular.addEventListener('click', function(event) {
+function botonCalcular(event) {
     event.preventDefault()
     const indicaciones = document.createElement('h3')
     indicaciones.textContent = 'Selecciona qué estadística de equipo deseas calcular'
     indicaciones.setAttribute('class', 'h3-test')
     mainContent.appendChild(indicaciones)
     seleccionarEstadisticas()
-})
+    btnCalcular.removeEventListener('click', botonCalcular)
+}
+btnCalcular.addEventListener('click', botonCalcular)
 
 let seleccion
 
@@ -81,6 +83,16 @@ function calcularPromedio(seleccion) {
         const outputResultado = document.createElement('p')
         outputResultado.textContent = `El equipo hizo un promedio de: ${promedio.toFixed(2)} ${seleccion} por partido`
         resultadoContainer.appendChild(outputResultado)
+
+        const resetBtn = document.createElement('button')
+        resetBtn.setAttribute('type', 'button')
+        resetBtn.setAttribute('class', 'btn btn-success')
+        resetBtn.textContent = 'Reiniciar Simulador'
+        resetBtn.addEventListener('click', function() {
+            reiniciarSimulador()
+        })
+        resultadoContainer.appendChild(resetBtn)
+        
     } catch (err) {
         let error1 = document.createElement('p')
         error1.textContent = err
@@ -89,6 +101,12 @@ function calcularPromedio(seleccion) {
         promedioContainer.appendChild(errorContainer)
     }
 }
+
+function reiniciarSimulador() {
+    location.reload()
+}
+
+
 Toastify({
     text: 'Volver',
     className: "toastify-alert",

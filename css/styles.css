@@ -204,3 +204,6 @@ div p {
     flex-wrap: wrap;
     justify-content: center;
 }
+select{
+    font-size: 24px;
+}
