@@ -47,7 +47,6 @@ function seleccionarEstadisticas(){
         seleccion = opcionesContainer.value
         resultadoContainer.innerHTML = ''
         calcularPromedio(seleccion)
-        console.log(seleccion);
     })
     mainContent.appendChild(opcionesContainer)
 }
@@ -73,7 +72,6 @@ function calcularPromedio(seleccion) {
     try {
         if (seleccion == 'puntos'){
             promedio = totalPuntos / cantidadJugadores
-            console.log(promedio);
         } else if (seleccion == 'rebotes'){
             promedio = totalRebotes / cantidadJugadores
         } else if (seleccion == 'asistencias'){
