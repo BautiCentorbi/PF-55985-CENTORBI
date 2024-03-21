@@ -53,7 +53,7 @@ function cargarLocalStorage() {
                     card.setAttribute('class', 'playerCard')
                     card.innerHTML = `<h4>Nombre del jugador: <span>${jugador.nombre}</span></h4>
                                         <h4>Estadísticas del jugador: ${jugador.estadisticas}</h4>
-                                        <h4> Promedio del jugador: ${promedio}</h4>`
+                                        <h4> Promedio del jugador: ${promedio.toFixed(2)}</h4>`
                         historialContainer.appendChild(card)
                         card.appendChild(btnClearPlayer)
                 })

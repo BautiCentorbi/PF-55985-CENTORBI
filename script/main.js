@@ -229,7 +229,7 @@ function mostrarResultados(mensaje){
         for (let i = 0; i < jugadoresTotales.length; i++){
             promedioEstadistica = jugadoresTotales[i].calcularPromedioEstadistica()
             const outputResultado = document.createElement('p')
-            outputResultado.textContent = `El jugador ${jugadoresTotales[i].nombre} hizo un promedio de ${promedioEstadistica} ${mensaje} por partido`
+            outputResultado.textContent = `El jugador ${jugadoresTotales[i].nombre} hizo un promedio de ${promedioEstadistica.toFixed(2)} ${mensaje} por partido`
             finalContainer.appendChild(outputResultado)
         }
     
