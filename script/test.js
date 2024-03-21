@@ -29,6 +29,7 @@ function botonCalcular(event) {
     mainContent.appendChild(indicaciones)
     seleccionarEstadisticas()
     btnCalcular.removeEventListener('click', botonCalcular)
+    btnCalcular.setAttribute('class', 'btn btn-primary disabled')
 }
 btnCalcular.addEventListener('click', botonCalcular)
 
@@ -106,13 +107,12 @@ function reiniciarSimulador() {
     location.reload()
 }
 
-
 Toastify({
     text: 'Volver',
     className: "toastify-alert",
     offset: {
         x: 20,
-        y: 120
+        y: 110
     },
     duration: -1,
     destination: "index.html",

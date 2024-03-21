@@ -52,6 +52,16 @@ header h2{
     font-size: 28px;
     padding-bottom: 20px;
 }
+#listadoJugadores {
+    background-color: #023a8d;
+    padding: 20px;
+    border-radius: 16px;
+}
+#listadoJugadores h2{
+    background-color: #023a8d;
+    padding: 20px;
+    color: #FFFFFF;
+}
 
 .left-side {
     background-color: #f6f6f6;
@@ -158,8 +168,8 @@ div p {
     border: solid 2px;
     border-radius: 16px;
     border-color: #e3e3e3;
-    width: 550px;
-    padding: 40px;
+    width: 520px;
+    padding: 20px;
     margin: 20px;
 }
 .playerCard h4{

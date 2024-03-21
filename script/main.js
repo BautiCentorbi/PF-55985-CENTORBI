@@ -50,6 +50,7 @@ function playerConfig (){
 
     try {
         if (cantidadJugadores > 0){
+            startButton.setAttribute('class', 'btn btn-primary disabled')
             const nombreContainer = document.getElementById('nombreContainer')
             nombreContainer.innerHTML = ''
             const formContainer = document .createElement('div')
@@ -80,6 +81,7 @@ function playerConfig (){
                 event.preventDefault()
                 crearJugadores()
                 ingresarPartidos()
+                nombreBtn.setAttribute('class', 'btn btn-primary disabled')
             })
             btnContainer.appendChild(nombreBtn)
             nombreContainer.appendChild(btnContainer)
@@ -143,6 +145,7 @@ function ingresarPartidos(){
                 event.preventDefault()
                 seleccionarEstadisticas()
                 errorContainer.innerHTML = ''
+                partidosBtn.setAttribute('class', 'btn btn-primary disabled')
             } else {
                 throw new  Error('Has ingresado un valor no válido, por favor, inténtalo de nuevo.')
             }
@@ -198,6 +201,7 @@ function preguntarEstadisticas(mensaje) {
                         loader()
                         mostrarResultados(mensaje)
                         errorContainer.innerHTML = ''
+                        continuarBtn.setAttribute('class', 'btn btn-primary disabled')
                     } else {
                         throw new Error('Por favor, verifica haber llenado todos los campos y que los mismos sea valores positivos antes de continuar.')
                     }
@@ -241,6 +245,7 @@ function mostrarResultados(mensaje){
         resetBtn.textContent = 'Reiniciar Simulador'
         resetBtn.addEventListener('click', function() {
             reiniciarSimulador()
+            resetBtn.setAttribute('class', 'btn btn-success disabled')
         })
     
         const endBtn = document.createElement('button')
@@ -257,6 +262,7 @@ function mostrarResultados(mensaje){
         historialBtn.textContent = 'Visitar Historial'
         historialBtn.addEventListener('click', function() {
             window.location = 'storage.html'
+            historialBtn.setAttribute('class', 'btn btn-light disabled')
         })
     
         btnContainer.appendChild(historialBtn)
