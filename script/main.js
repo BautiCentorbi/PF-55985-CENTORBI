@@ -48,46 +48,51 @@ function playerConfig (){
     const inputCantidadJugadores = document.getElementById('cantidadJugadores')
     cantidadJugadores = parseInt(inputCantidadJugadores.value)
 
-    if (cantidadJugadores > 0){
-        const nombreContainer = document.getElementById('nombreContainer')
-        nombreContainer.innerHTML = ''
-        const formContainer = document .createElement('div')
-        
-        for (let i = 0; i < cantidadJugadores; i++){
-            const preguntarNombre = document.createElement('input')
-            preguntarNombre.setAttribute('type', 'text')
-            preguntarNombre.setAttribute('class', 'form-control')
-            preguntarNombre.setAttribute('placeholder', `Ingresa el nombre del jugador ${i+1}`)
-            preguntarNombre.setAttribute('id', `nombreJugador ${i+1}`)
-            preguntarNombre.setAttribute('required', 'true')
-
-            const labelJugador = document.createElement('label')    
-            labelJugador.textContent = `Ingresa el nombre del jugador ${i+1}`
-            labelJugador.setAttribute('class', 'labelJugador')
+    try {
+        if (cantidadJugadores > 0){
+            const nombreContainer = document.getElementById('nombreContainer')
+            nombreContainer.innerHTML = ''
+            const formContainer = document .createElement('div')
             
-            formContainer.appendChild(labelJugador)
-            formContainer.appendChild(preguntarNombre)
-            nombreContainer.appendChild(formContainer)
+            for (let i = 0; i < cantidadJugadores; i++){
+                const preguntarNombre = document.createElement('input')
+                preguntarNombre.setAttribute('type', 'text')
+                preguntarNombre.setAttribute('class', 'form-control')
+                preguntarNombre.setAttribute('placeholder', `Ingresa el nombre del jugador ${i+1}`)
+                preguntarNombre.setAttribute('id', `nombreJugador ${i+1}`)
+                preguntarNombre.setAttribute('required', 'true')
+    
+                const labelJugador = document.createElement('label')    
+                labelJugador.textContent = `Ingresa el nombre del jugador ${i+1}`
+                labelJugador.setAttribute('class', 'labelJugador')
+                
+                formContainer.appendChild(labelJugador)
+                formContainer.appendChild(preguntarNombre)
+                nombreContainer.appendChild(formContainer)
+            }
+            const btnContainer = document.getElementById('btnContainer')
+            const nombreBtn = document.createElement('button')
+            nombreBtn.textContent = 'Continuar'
+            nombreBtn.setAttribute('type', 'button')
+            nombreBtn.setAttribute('class', 'btn btn-primary')
+            nombreBtn.setAttribute('for', 'nombreContainer')
+            nombreBtn.addEventListener('click', function(event){
+                event.preventDefault()
+                crearJugadores()
+                ingresarPartidos()
+            })
+            btnContainer.appendChild(nombreBtn)
+            nombreContainer.appendChild(btnContainer)
+        } else {
+            throw new Error('Has ingresado un valor no válido, por favor, inténtalo de nuevo.')
         }
-        const btnContainer = document.getElementById('btnContainer')
-        const nombreBtn = document.createElement('button')
-        nombreBtn.textContent = 'Continuar'
-        nombreBtn.setAttribute('type', 'button')
-        nombreBtn.setAttribute('class', 'btn btn-primary')
-        nombreBtn.setAttribute('for', 'nombreContainer')
-        nombreBtn.addEventListener('click', function(event){
-            event.preventDefault()
-            crearJugadores()
-            ingresarPartidos()
-        })
-        btnContainer.appendChild(nombreBtn)
-        nombreContainer.appendChild(btnContainer)
-    } else {
-        const error1 = document.createElement('p')
-        error1.textContent = 'Has ingresado un valor no válido, por favor, inténtalo de nuevo'
+    } catch (err) { 
+        let error1 = document.createElement('p')
+        error1.textContent = err
         error1.setAttribute('class','errores')
         nombreContainer.appendChild(error1)
     }
+    
 }
 
 function crearJugadores() {
@@ -107,6 +112,7 @@ function ingresarPartidos(){
     const questionContainer = document.getElementById('questionContainer')
     const preguntaPartidos = document.createElement('input')
     const btnContainer = document.getElementById('btnContainer2')
+    const errorContainer = document.createElement('div')
 
     preguntaPartidos.setAttribute('type', 'text')
     preguntaPartidos.setAttribute('class', 'form-control')
@@ -131,15 +137,21 @@ function ingresarPartidos(){
     partidosContainer.appendChild(btnContainer)
 
     partidosBtn.addEventListener('click', function(event){
-        if (!isNaN(preguntaPartidos.value)) {
-            partidosTotales = parseInt(preguntaPartidos.value)
-            event.preventDefault()
-            seleccionarEstadisticas()
-        } else {
-            const error1 = document.createElement('p')
-            error1.textContent = 'Has ingresado un valor no válido, por favor, inténtalo de nuevo'
+        try {
+            if (!isNaN(preguntaPartidos.value)) {
+                partidosTotales = parseInt(preguntaPartidos.value)
+                event.preventDefault()
+                seleccionarEstadisticas()
+                errorContainer.innerHTML = ''
+            } else {
+                throw new  Error('Has ingresado un valor no válido, por favor, inténtalo de nuevo.')
+            }
+        } catch (err) {
+            let error1 = document.createElement('p')
+            error1.textContent = err
             error1.setAttribute('class','errores')
-            partidosContainer.appendChild(error1)
+            errorContainer.appendChild(error1)
+            questionContainer.appendChild(errorContainer)
         }
     })
 }
@@ -161,76 +173,97 @@ function seleccionarEstadisticas(){
 
 function preguntarEstadisticas(mensaje) {
     let inputs = []
+    
     for (let m = 0; m < partidosTotales; m++){
         for (let i = 0; i < cantidadJugadores; i++){
             inputs.push(jugadoresTotales[i].agregarEstadistica(mensaje, m))
         }
-    }
-    const continuarBtn = document.createElement('button')
-        continuarBtn.setAttribute('type', 'button')
-        continuarBtn.setAttribute('class', 'btn btn-primary')
-        continuarBtn.textContent = 'Continuar'
-        continuarBtn.addEventListener('click', function() {
-            let todosLosCamposTienenValor = inputs.every(input => input.value)
-            let todosLosCamposSonPositivos = inputs.every(input => Number(input.value) >= 0)
-            if (todosLosCamposTienenValor && todosLosCamposSonPositivos) {
-                for (let i = 0; i < inputs.length; i++) {
-                    let idPartido = i % partidosTotales
-                    let idJugador = Math.floor(i / partidosTotales)
-                    jugadoresTotales[idJugador].estadisticas[idPartido] = parseInt(inputs[i].value)
+    }   
+    const errorContainer = document.createElement('div')
+        const continuarBtn = document.createElement('button')
+            continuarBtn.setAttribute('type', 'button')
+            continuarBtn.setAttribute('class', 'btn btn-primary')
+            continuarBtn.textContent = 'Continuar'
+            continuarBtn.addEventListener('click', function() {
+                let todosLosCamposTienenValor = inputs.every(input => input.value)
+                let todosLosCamposSonPositivos = inputs.every(input => Number(input.value) >= 0)
+                try {
+                    if (todosLosCamposTienenValor && todosLosCamposSonPositivos) {
+                        for (let i = 0; i < inputs.length; i++) {
+                            let idPartido = i % partidosTotales
+                            let idJugador = Math.floor(i / partidosTotales)
+                            jugadoresTotales[idJugador].estadisticas[idPartido] = parseInt(inputs[i].value)
+                        }
+                        finalContainer.innerHTML = ''
+                        loader()
+                        mostrarResultados(mensaje)
+                        errorContainer.innerHTML = ''
+                    } else {
+                        throw new Error('Por favor, verifica haber llenado todos los campos y que los mismos sea valores positivos antes de continuar.')
+                    }
+                } catch (err) {
+                    let error1 = document.createElement('p')
+                    error1.textContent = err
+                    error1.setAttribute('class','errores')
+                    errorContainer.appendChild(error1)
+                    resultadosContainer.appendChild(errorContainer)
                 }
-                mostrarResultados(mensaje)
-            } else {
-                const error2 = document.createElement('p')
-                error2.textContent = 'Por favor, verifica haber llenado todos los campos con valores positivos antes de continuar.'
-                error2.setAttribute('class','errores')
-                finalContainer.appendChild(error2)
-            }
-        })
-    resultadosContainer.appendChild(continuarBtn)
+            })
+            resultadosContainer.appendChild(continuarBtn)
 }
 
 const finalContainer = document.getElementById('resultado')
 let promedioEstadistica
 
+function loader(){
+    const loader = document.createElement('div')
+    loader.setAttribute('class', 'loader')
+    finalContainer.setAttribute('class', 'loader-container')
+    finalContainer.appendChild(loader)
+}
+
 function mostrarResultados(mensaje){
-    for (let i = 0; i < jugadoresTotales.length; i++){
-        promedioEstadistica = jugadoresTotales[i].calcularPromedioEstadistica()
-        const outputResultado = document.createElement('p')
-        outputResultado.textContent = `El jugador ${jugadoresTotales[i].nombre} hizo un promedio de ${promedioEstadistica} ${mensaje} por partido`
-        finalContainer.appendChild(outputResultado)
-    }
-
-    const btnContainer = document.getElementById('btnContainer3')
-
-    const resetBtn = document.createElement('button')
-    resetBtn.setAttribute('type', 'button')
-    resetBtn.setAttribute('class', 'btn btn-success')
-    resetBtn.textContent = 'Reiniciar Simulador'
-    resetBtn.addEventListener('click', function() {
-        reiniciarSimulador()
-    })
-
-    const endBtn = document.createElement('button')
-    endBtn.setAttribute('type', 'button')
-    endBtn.setAttribute('class', 'btn btn-danger')
-    endBtn.textContent = 'Finalizar Simulador'
-    endBtn.addEventListener('click', function() {
-        finalizarSimulador()
-    })
-
-    const historialBtn = document.createElement('button')
-    historialBtn.setAttribute('type', 'button')
-    historialBtn.setAttribute('class', 'btn btn-light')
-    historialBtn.textContent = 'Visitar Historial'
-    historialBtn.addEventListener('click', function() {
-        window.location = 'storage.html'
-    })
-
-    btnContainer.appendChild(historialBtn)
-    btnContainer.appendChild(resetBtn)
-    btnContainer.appendChild(endBtn)
-    finalContainer.appendChild(btnContainer)
+    setTimeout(() => {
+        finalContainer.innerHTML = ''
+        finalContainer.setAttribute('class', 'container-fluid')
+        for (let i = 0; i < jugadoresTotales.length; i++){
+            promedioEstadistica = jugadoresTotales[i].calcularPromedioEstadistica()
+            const outputResultado = document.createElement('p')
+            outputResultado.textContent = `El jugador ${jugadoresTotales[i].nombre} hizo un promedio de ${promedioEstadistica} ${mensaje} por partido`
+            finalContainer.appendChild(outputResultado)
+        }
+    
+        const btnContainer = document.getElementById('btnContainer3')
+    
+        const resetBtn = document.createElement('button')
+        resetBtn.setAttribute('type', 'button')
+        resetBtn.setAttribute('class', 'btn btn-success')
+        resetBtn.textContent = 'Reiniciar Simulador'
+        resetBtn.addEventListener('click', function() {
+            reiniciarSimulador()
+        })
+    
+        const endBtn = document.createElement('button')
+        endBtn.setAttribute('type', 'button')
+        endBtn.setAttribute('class', 'btn btn-danger')
+        endBtn.textContent = 'Finalizar Simulador'
+        endBtn.addEventListener('click', function() {
+            finalizarSimulador()
+        })
+    
+        const historialBtn = document.createElement('button')
+        historialBtn.setAttribute('type', 'button')
+        historialBtn.setAttribute('class', 'btn btn-light')
+        historialBtn.textContent = 'Visitar Historial'
+        historialBtn.addEventListener('click', function() {
+            window.location = 'storage.html'
+        })
+    
+        btnContainer.appendChild(historialBtn)
+        btnContainer.appendChild(resetBtn)
+        btnContainer.appendChild(endBtn)
+        finalContainer.appendChild(btnContainer)
+    }, 500);
 }
 
 function finalizarSimulador() {
@@ -239,6 +272,25 @@ function finalizarSimulador() {
     finalizar.textContent = '¡Gracias por usar este simulador!'
     resultadosContainer.appendChild(finalizar)
     guardarLocalStorage()
+    Toastify({
+        text: "Guardado en el Historial",
+        className: "toastify-alert",
+        offset: {
+            x: 20,
+            y: 100
+        },
+        duration: 4000,
+        destination: "storage.html",
+        newWindow: false,
+        close: true,
+        gravity: "top",
+        position: "right",
+        stopOnFocus: true,
+        style: {
+        background: "linear-gradient(to right, #833ab4, #1d1efd)",
+        },
+        onClick: function(){}
+    }).showToast();
 }
 
 function reiniciarSimulador() {

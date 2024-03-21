@@ -13,12 +13,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Mr+Dafoe&family=Protest+Strike&display=swap" rel="stylesheet">
     <!-- Fontawesome -->
     <script src="https://kit.fontawesome.com/bb9cdddec0.js" crossorigin="anonymous"></script>
+    <link rel="shortcut icon" href="./media/favicon.ico" type="image/x-icon">
     <title>Pre Entrega nº1 CENTORBI Bautista</title>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg" data-bs-theme="dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="./index.html">AdvanStats</a>
+            <a class="navbar-brand" href="./index.html"><img src="./media/Logo AdvanStats.png" class="logo" alt="AdvanStats Logo"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -36,15 +37,23 @@
             </div>
         </div>
     </nav>
-    <header class="mainStorage">
-        <div class="headline-container">
-            <h1>Estadística de jugadores</h1>
-            <h2>¿Cómo funciona?</h2>
+    <header class="container-fluid">
+        <div class="row">
+            <div class="col-5">
+                <img src="./media/Logo Hero.png" class="mx-auto d-block" alt="Logo Completo AdvanStats">
+            </div>
+            <div class="col-7" id="description">
+                <div class="headline-container">
+                    <h1>Estadística de jugadores</h1>
+                    <h2>¿Cómo funciona?</h2>
+                </div>
+                <div class="main-description">
+                    <p>Primero se le consulta al usuario cuántos jugadores desea calcular su promedio y los nombres de los mismos, luego se preguntan la cantidad de partidos sobre los que se desea calcular un promedio. Finalmente, se pregunta al usuario qué estadística desea calcular, es decir, puntos, rebotes o asistencias. Posteriormente se tipean los datos correspondientes y se calcula el promedio. Una vez finalizado, se pregunta al usuario si desea seguir utilizando el simulador, o si desea salir del mismo.</p>
+                </div>
+                <a href="./test.html"><button class="btn btn-secondary">PRUEBA DE USO</button></a>
+                <a href="./main.html"><button class="btn btn-primary">COMENZAR</button></a>
+            </div>
         </div>
-        <div class="main-description">
-            <p>Primero se le consulta al usuario cuántos jugadores desea calcular su promedio y los nombres de los mismos, luego se preguntan la cantidad de partidos sobre los que se desea calcular un promedio. Finalmente, se pregunta al usuario qué estadística desea calcular, es decir, puntos, rebotes o asistencias. Posteriormente se tipean los datos correspondientes y se calcula el promedio. Una vez finalizado, se pregunta al usuario si desea seguir utilizando el simulador, o si desea salir del mismo.</p>
-        </div>
-        <a href="./main.html"><button class="btn btn-primary">COMENZAR</button></a>
     </header>
     
     <!-- Boostrap -->

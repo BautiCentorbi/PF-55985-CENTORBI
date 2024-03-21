@@ -5,6 +5,15 @@
     font-family: 'Poppins', sans-serif;
 }
 
+.row {
+    margin: 50px 50px;
+    display: flex !important;
+}
+#description {
+    align-items: center;
+    margin-top: 50px;
+}
+
 header {
     margin: 25px;
     display: grid;
@@ -13,8 +22,7 @@ header {
 }
 header h1 {
     width: 100%;
-    text-align: center;
-    margin: 18px;
+    text-align: left;
     font-size: 48px;
     font-family: "Protest Strike", sans-serif;
     font-weight: 100;
@@ -22,7 +30,7 @@ header h1 {
 }
 header h2{
     width: 100%;
-    text-align: center;
+    text-align: left;
     font-size: 28px;
     padding-bottom: 20px;
 }
@@ -73,6 +81,13 @@ nav .container-fluid {
     font-size: 18px;
 }
 
+.logo {
+    height: 64px;
+}
+.mx-auto {
+    width: 450px;
+}
+
 label {
     font-size: large;
     font-weight: 600;
@@ -104,7 +119,7 @@ form {
 
 div p {
     font-size: larger;
-    font-weight: 600;
+    font-weight: 400;
 }
 
 .mainStorage {
@@ -120,7 +135,7 @@ div p {
     justify-content: space-between;
 }
 
-.storageDiv{
+.playerCard{
     background-color: #f6f6f6;
     border: solid 2px;
     border-radius: 16px;
@@ -128,4 +143,49 @@ div p {
     width: 550px;
     padding: 40px;
     margin: 20px;
+}
+.playerCard h4{
+    font-size: 20px;
+}
+.playerCard span{
+    font-size: 24px;
+    color: #023a8d;
+}
+
+.errores {
+    font-size: 18px;
+    font-weight: 400;
+    color: red;
+}
+.toastify-alert{
+    font-weight: 800;
+    color: #ffffff;
+}
+
+.loader {
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #3498db;
+    width: 120px;
+    height: 120px;
+    -webkit-animation: spin 2s linear infinite; /* Safari */
+    animation: spin 2s linear infinite;
+}
+@-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loader-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+#promedioEquipo {
+    margin: 20px 0;
 }
