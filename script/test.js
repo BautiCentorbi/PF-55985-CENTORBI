@@ -17,11 +17,16 @@ fetch("./data/players.json")
     })
 })
 
+const mainContent = document.getElementById('mainContent')
 const promedioContainer = document.getElementById('promedioEquipo')
 
 const btnCalcular = document.getElementById('calcularPromedio')
 btnCalcular.addEventListener('click', function(event) {
     event.preventDefault()
+    const indicaciones = document.createElement('h3')
+    indicaciones.textContent = 'Selecciona qué estadística de equipo deseas calcular'
+    indicaciones.setAttribute('class', 'h3-test')
+    mainContent.appendChild(indicaciones)
     seleccionarEstadisticas()
 })
 
@@ -41,7 +46,7 @@ function seleccionarEstadisticas(){
         calcularPromedio(seleccion)
         console.log(seleccion);
     })
-    promedioContainer.appendChild(opcionesContainer)
+    mainContent.appendChild(opcionesContainer)
 }
 
 const resultadoContainer = document.getElementById('resultado')
@@ -84,3 +89,22 @@ function calcularPromedio(seleccion) {
         promedioContainer.appendChild(errorContainer)
     }
 }
+Toastify({
+    text: 'Volver',
+    className: "toastify-alert",
+    offset: {
+        x: 20,
+        y: 120
+    },
+    duration: -1,
+    destination: "index.html",
+    newWindow: false,
+    close: true,
+    gravity: "top",
+    position: "left",
+    stopOnFocus: true,
+    style: {
+    background: "linear-gradient(to right, #833ab4, #1d1efd)",
+    },
+    onClick: function(){}
+}).showToast();

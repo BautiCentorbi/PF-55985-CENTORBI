@@ -42,6 +42,10 @@
         </div>
     </nav>
     
+    <header>
+        <h1 class="tittleTest">Funcionalidad en desarrollo</h1>
+        <h2 class="subTittleTest">Podrás importar un equipo desde un documento y realizar cálculos de estadísticas de equipo, no sólo individuales.</h2>
+    </header>
     <main class="mainTest">
         <div class="row">
             <div class="col-4">
@@ -49,12 +53,15 @@
                 <div id="listadoJugadores"></div>
             </div>
             <div class="col-8" id="promedioEquipo">
-                <button id="calcularPromedio" class="btn btn-primary">COMENZAR</button>
+                <div id="mainContent"></div>
                 <div id="errorContainer"></div>
                 <div id="resultado"></div>
+                <button id="calcularPromedio" class="btn btn-primary">COMENZAR</button>
             </div>
         </div>
     </main>
+    <!-- Toastify -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <!-- Boostrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
